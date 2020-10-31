@@ -1,15 +1,20 @@
 package com.math.medicinelist;
 
+import java.util.ArrayList;
+
 public class Medicine {
 
     private String name;
     private String strength;
-    private String dose;
+    private ArrayList<String> doses;
 
-    public Medicine(String name, String strength, String dose) {
+    public Medicine(String name, String strength, String... doses) {
+        this.doses = new ArrayList<>();
         setName(name);
         setStrength(strength);
-        setDose(dose);
+        for (String s : doses){
+            setDoses(s);
+        }
     }
 
     public String getName() {
@@ -28,11 +33,11 @@ public class Medicine {
         this.strength = strength;
     }
 
-    public String getDose() {
-        return dose;
+    public ArrayList<String> getDoses() {
+        return doses;
     }
 
-    public void setDose(String dose) {
-        this.dose = dose;
+    public void setDoses(String dose) {
+        this.doses.add(dose);
     }
 }
