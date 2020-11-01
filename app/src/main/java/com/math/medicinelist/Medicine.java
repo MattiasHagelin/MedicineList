@@ -7,6 +7,7 @@ public class Medicine {
     private String name;
     private String strength;
     private ArrayList<String> doses;
+    private Schedule schedule;
 
     public Medicine(String name, String strength, String... doses) {
         this.doses = new ArrayList<>();
@@ -39,5 +40,13 @@ public class Medicine {
 
     public void setDoses(String dose) {
         this.doses.add(dose);
+    }
+
+    public Schedule getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(Schedule schedule) {
+        this.schedule = schedule;
     }
 }

@@ -8,7 +8,6 @@ public class Schedule {
     private ArrayList<LocalTime> doseTimes;
     private LocalDate startDate;
     private LocalDate endDate;
-    private Medicine medicine;
 
     public ArrayList<LocalTime> getDoseTimes() {
         return doseTimes;
@@ -32,13 +31,5 @@ public class Schedule {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
-    }
-
-    public Medicine getMedicine() {
-        return medicine;
-    }
-
-    public void setMedicine(Medicine medicine) {
-        this.medicine = medicine;
     }
 }
