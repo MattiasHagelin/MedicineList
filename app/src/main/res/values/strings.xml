@@ -9,4 +9,13 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="medicineName">Medicine name</string>
+    <string name="medicineStrength">Medicine Strength</string>
+    <string name="dose">Dose</string>
+    <string name="addDose">Add dose</string>
+    <string name="startDate">Start date</string>
+    <string name="endDate">End date</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+
 </resources>
