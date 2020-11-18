@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.os.Bundle;
 
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -12,9 +11,10 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -37,7 +37,7 @@ public class AddMedicineActivity extends AppCompatActivity implements View.OnCli
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         findViewsById();
         setDateTimeField();
-        latestDoseEtId = R.id.dose;
+        latestDoseEtId = R.id.addDose;
     }
 
     private void findViewsById() {
@@ -88,48 +88,63 @@ public class AddMedicineActivity extends AppCompatActivity implements View.OnCli
 
     public void addDose(View view) {
         ConstraintLayout cLo = (ConstraintLayout) findViewById(R.id.scrollAddMedicineLo);
-        ConstraintSet cS = new ConstraintSet();
-        EditText et = new EditText(this);
-        ConstraintLayout.LayoutParams doseLop = (ConstraintLayout.LayoutParams) findViewById(R.id.dose).getLayoutParams();
-        ConstraintLayout.LayoutParams lop = new ConstraintLayout.LayoutParams(
-                ConstraintLayout.LayoutParams.MATCH_CONSTRAINT,
-                ConstraintLayout.LayoutParams.MATCH_CONSTRAINT);
-        lop.leftMargin = doseLop.leftMargin;
-        lop.rightMargin = doseLop.rightMargin;
-        lop.topMargin = doseLop.topMargin;
-        lop.height = doseLop.height;
-        lop.width = doseLop.width;
+        EditText et = createEditText(R.string.dose);
+        addViewBelow((ConstraintLayout) findViewById(R.id.scrollAddMedicineLo), new ConstraintSet(), et, latestDoseEtId);
+        Button button = createButton();
+        addViewToRight((ConstraintLayout) findViewById(R.id.scrollAddMedicineLo), new ConstraintSet(), button, et.getId());
 
-        et.setHint(R.string.dose);
-        et.setId(latestDoseEtId+1000);
-
-        //et.setId(View.generateViewId()); Requires API level 17
-        cLo.addView(et, lop);
-        cS.clone(cLo);
-        cS.connect(et.getId(),
-                ConstraintSet.TOP,
-                latestDoseEtId,
-                ConstraintSet.BOTTOM, 8);
-        cS.applyTo(cLo);
         latestDoseEtId = et.getId();
-        /* android:id="@+id/dose"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:autofillHints="@string/dose"
-        android:ems="10"
-        android:hint="@string/dose"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toStartOf="@+id/addDose"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/medicineStrength" */
+        et.requestFocus();
+    }
+
+    private void addViewBelow(ConstraintLayout constLayout, ConstraintSet constSet, TextView view, int refView) {
+        constLayout.addView(view, createConstLayoutParams((ConstraintLayout.LayoutParams) findViewById(R.id.addDose).getLayoutParams()));
+        constSet.clone(constLayout);
+        constSet.connect(view.getId(),
+                ConstraintSet.TOP,
+                refView,
+                ConstraintSet.BOTTOM, 8);
+        constSet.applyTo(constLayout);
+    }
+
+    private void addViewToRight(ConstraintLayout constLayout, ConstraintSet constSet, TextView view, int refView) {
+        //TODO: Fix so placement is beside latest added view
+        constLayout.addView(view, createConstLayoutParams((ConstraintLayout.LayoutParams) findViewById(R.id.addDose).getLayoutParams()));
+        constSet.clone(constLayout);
+        constSet.connect(view.getId(),
+                ConstraintSet.LEFT,
+                refView,
+                ConstraintSet.RIGHT, 8);
+        constSet.applyTo(constLayout);
     }
 
     public void cancel(View view) {
         super.finish();
     }
+
+    private EditText createEditText(int hint) {
+        EditText et = new EditText(this);
+        et.setHint(R.string.dose);
+        et.setId(View.generateViewId());
+        return et;
+    }
+
+    private Button createButton() {
+        Button b = new Button(this);
+        b.setId(View.generateViewId());
+        return b;
+    }
+
+    private ConstraintLayout.LayoutParams createConstLayoutParams(ConstraintLayout.LayoutParams params) {
+        ConstraintLayout.LayoutParams lop = new ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.MATCH_CONSTRAINT,
+                ConstraintLayout.LayoutParams.MATCH_CONSTRAINT);
+        lop.leftMargin = params.leftMargin;
+        lop.rightMargin = params.rightMargin;
+        lop.topMargin = params.topMargin;
+        lop.height = params.height;
+        lop.width = params.width;
+        return lop;
+    }
+
 }
