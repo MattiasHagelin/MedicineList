@@ -11,10 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicineList">
         <activity
-            android:name=".AddMedicineActivity"
+            android:name=".Activity.AddMedicineActivity"
             android:label="@string/title_activity_add_medicine"
             android:theme="@style/Theme.MedicineList.NoActionBar"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
